@@ -9,7 +9,34 @@ The purpose of this model is to measure how effective a chatbot is in answering 
 
 *<a href="https://datasets.maluuba.com/">Maluuba</a>, a Microsoft company working towards general artificial intelligence, recently released a new open dialogue dataset based on booking a vacation - specifically, finding flights and a hotel.*
 
-The <a href="https://datasets.maluuba.com/Frames/dl">dataset</a> contains 1,369 dialogues around travel planning. Here is a sample of what a dialogue looks like when queried in Python:
+The <a href="https://datasets.maluuba.com/Frames/dl">dataset</a> contains 1,369 dialogues around travel planning. Each dialogue contains the following:
+
+
+| Key Name                          | Description         |
+| --------------------------------- |:-------------:|
+| id                                | Refers to a unique identification for the dialogue. |
+| userid                            | Refers to a unique identifier for the user taking part in the dialogue. |
+| wizardid                          | Refers to a unique identifier for the wizard taking part in the dialogue.
+| labels.userSurveyRating           | A value that represents the user's satisfaction with the Wizard's service, ranging from 1 - complete dissatisfaction to 5 - complete satisfaction. |
+| labels.wizardSurveyTaskSuccessful | A boolean which is true if the wizard thinks at the end of the dialogue that the user's goal was achieved. |
+| turns                             | Details of each "turn" of the dialogue. This includes the keys: author, text, labels, timestamp, frames, db |
+
+The key _frames_ refers to how often the conversation shifts intentions. The user may start the conversation wanting to go to Toronto, but then also inquire about how to book a trip to California. This would generate a new frame.
+
+A sample of the data is at the bottom of this readme.
+
+## Project Check In: August 24, 2017
+
+The _frames.json_ file has been imported into Python and turned into a pandas dataframe.
+
+Two of the main columns contains nested dictionaries: Labels and Turns. Labels was extracted using _json normalize_ so that userSurveyRating and wizardSurveyTaskSuccessful are brought up to the main columns. 
+
+However, the nested dictionary within Turns is more extensive. Each dialogue has many Turns, and each Turn has contains dictionaries, such as who the author is, what the text was, the intent of the user in initiating the conversation with the chat wizard, and what is framing the discussion. As noted by Maluuba, "Frame tracking consists of keeping in memory all the different sets of constraints mentioned by the user. It is a generalization of the state tracking task to a setting where not only the current frame is memorized." 
+
+I have not been able to extract the Turns dictionary in a manner that makes sense yet. That is the immediate step before continuuing on with the analysis. Once completed, I intend to use the information in Turns as the feature set that will determine if the conversation was successful. The two labels - userSurveyRating and wizardSurveyTaskSuccessful - are the classifiers for these dialogues. Successful dialogues result in if userSurveyRatings are above 4 and if wizardSurveyTaskSuccessful is 1. Supervised machine learning will be used to build this analysis.
+
+
+## Sample Data
 
 ``` Python
 {'id': '0d364be2-9f43-4f5a-8506-1af4523515ba',
