@@ -35,6 +35,11 @@ However, the nested dictionary within Turns is more extensive. Each dialogue has
 
 I have not been able to extract the Turns dictionary in a manner that makes sense yet. That is the immediate step before continuuing on with the analysis. Once completed, I intend to use the information in Turns as the feature set that will determine if the conversation was successful. The two labels - userSurveyRating and wizardSurveyTaskSuccessful - are the classifiers for these dialogues. Successful dialogues result in if userSurveyRatings are above 4 and if wizardSurveyTaskSuccessful is 1. Supervised machine learning will be used to build this analysis.
 
+## Project Check In: September 12, 2017
+
+Because I found it difficult to flatten the Turns nested dictionaries, I ended up using for loops to take the data I wanted from the dictionaries and append them back to the main data frame of results. I also included the library TextBlob, which provides Sentiment Analysis. The results of the sentiment analysis for each dialogue was appended to the final feature matrix.
+
+I was only able to run two passes of the SVM and Random Forest classification models at my data set. The first included all features (around 30 features) and the second was ran for about 20 features. However, I was only able to achieve 75% as a metrics score.
 
 ## Sample Data
 
